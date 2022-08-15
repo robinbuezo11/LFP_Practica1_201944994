@@ -1,59 +1,57 @@
+from doctest import master
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox as msgbx
+from ManagerFile import *
+from WindowFile import *
 
-class WindowMain(tk.Frame):
-    def __init__(self,window) -> None:
-        self.window = window
-        super().__init__(self.window)
-        self.window.title('Practica 1')
-        self.window.geometry('850x650')
-        self.window.config(background='sky blue')
-        self.window.resizable(False,False)
+class WindowMain(ttk.Frame):
+    def __init__(self,master) -> None:
+        super().__init__(master)
+        master.title('Practica 1')
+        master.geometry('850x650')
+        master.config(background='sky blue')
+        master.resizable(False,False)
 
-        #----------------------------------Labels--------------------------------------------
+        self.__mngfile = ManagerFile()
 
-        self.lblcurso = tk.Label(self.window,text='Lenguajes Formales y de Programación A+',font='Arial 16 bold', 
+        #--------------------------------- Labels -------------------------------------------
+
+        self.__lblcurso = ttk.Label(master,text='Lenguajes Formales y de Programación A+',font='Arial 16 bold', 
                                     background='sky blue')
-        self.lblcurso.place(x=100, y=30)
+        self.__lblcurso.place(x=100, y=30)
 
-        self.lblstudent = tk.Label(self.window,text='Robin Omar Buezo Díaz', font='Arial 16 bold', background='sky blue')
-        self.lblstudent.place(x=100, y= 70)
+        self.__lblstudent = ttk.Label(master,text='Robin Omar Buezo Díaz', font='Arial 16 bold', background='sky blue')
+        self.__lblstudent.place(x=100, y= 70)
 
-        self.lblcarne = tk.Label(self.window,text='201944994', font='Arial 16 bold', background='sky blue')
-        self.lblcarne.place(x=100, y=110)
+        self.__lblcarne = ttk.Label(master,text='201944994', font='Arial 16 bold', background='sky blue')
+        self.__lblcarne.place(x=100, y=110)
 
-        #----------------------------------buttons---------------------------------------------
+        #--------------------------------- buttons --------------------------------------------
 
-        self.buttonfile = tk.Button(self.window, text='Cargar Archivo', width=20, height=2, background='SpringGreen3', font='Arial 12 bold',
-                                    command=self.actButtonFile)
-        self.buttonfile.place(x=330, y=200)
+        self.__buttonfile = tk.Button(master, text='Cargar Archivo', width=20, height=2, font='Arial 12 bold', command=self.__actButtonFile)
+        self.__buttonfile.place(x=330, y=200)
 
-        self.buttonmanage = tk.Button(self.window, text='Gestionar Cursos', width=20, height=2, background='SpringGreen3', font='Arial 12 bold',
-                                    command=self.actButtonManage)
-        self.buttonmanage.place(x=330, y=290)
+        self.__buttonmanage = tk.Button(master, text='Gestionar Cursos', width=20, height=2, font='Arial 12 bold', command=self.__actButtonManage)
+        self.__buttonmanage.place(x=330, y=290)
 
-        self.buttoncounting = tk.Button(self.window, text='Conteo de Créditos', width=20, height=2, background='SpringGreen3', font='Arial 12 bold',
-                                    command=self.actButtonCounting)
-        self.buttoncounting.place(x=330, y=380)
+        self.__buttoncounting = tk.Button(master, text='Conteo de Créditos', width=20, height=2, font='Arial 12 bold', command=self.__actButtonCounting)
+        self.__buttoncounting.place(x=330, y=380)
 
-        self.buttonexit = tk.Button(self.window, text='Salir', width=20, height=2, background='SpringGreen3', font='Arial 12 bold',
-                                    command=self.actButtonExit)
-        self.buttonexit.place(x=330, y=470)
+        self.__buttonexit = tk.Button(master, text='Salir', width=20, height=2, font='Arial 12 bold', command=self.__actButtonExit)
+        self.__buttonexit.place(x=330, y=470)
 
-        #---------------------------------Show Window--------------------------------
 
-        window.mainloop()
+    #----------------------- Actions -----------------------------
 
-    #-----------------------Actions-----------------------------
+    def __actButtonFile(self):
+        WindowFile(tk.Toplevel(),callback=self.__mngfile.setFile)
 
-    def actButtonFile(self):
-        msgbx.showinfo('Action','Has presionado el boton Cargar')
-
-    def actButtonManage(self):
+    def __actButtonManage(self):
         msgbx.showinfo('Action','Has presionado el boton Gestion')
     
-    def actButtonCounting(self):
+    def __actButtonCounting(self):
         msgbx.showinfo('Action','Has presionado el boton Conteo')
 
-    def actButtonExit(self):
-        self.window.destroy()
+    def __actButtonExit(self):
+        self.master.destroy()

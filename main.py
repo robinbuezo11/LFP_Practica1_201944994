@@ -1,9 +1,8 @@
 from tkinter.filedialog import Open
-from OpenFile import *
+from ManagerFile import *
 from WindowMain import *
 
-#file = OpenFile().readFile('archivo_prueba.csv')
+main = tk.Tk()
 
-#print(file)
-
-start = WindowMain(tk.Tk())
+window = WindowMain(main)
+window.mainloop()
