@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter import messagebox as msgbx
 from ManagerFile import *
 from WindowFile import *
+from WindowManager import *
 
 class WindowMain(ttk.Frame):
     def __init__(self,master) -> None:
@@ -29,17 +30,23 @@ class WindowMain(ttk.Frame):
 
         #--------------------------------- buttons --------------------------------------------
 
-        self.__buttonfile = tk.Button(master, text='Cargar Archivo', width=20, height=2, font='Arial 12 bold', command=self.__actButtonFile)
+        self.__buttonfile = ttk.Button(master, text='Cargar Archivo', width=20, command=self.__actButtonFile)
         self.__buttonfile.place(x=330, y=200)
 
-        self.__buttonmanage = tk.Button(master, text='Gestionar Cursos', width=20, height=2, font='Arial 12 bold', command=self.__actButtonManage)
+        self.__buttonmanage = ttk.Button(master, text='Gestionar Cursos', width=20, command=self.__actButtonManage)
         self.__buttonmanage.place(x=330, y=290)
 
-        self.__buttoncounting = tk.Button(master, text='Conteo de Créditos', width=20, height=2, font='Arial 12 bold', command=self.__actButtonCounting)
+        self.__buttoncounting = ttk.Button(master, text='Conteo de Créditos', width=20, command=self.__actButtonCounting)
         self.__buttoncounting.place(x=330, y=380)
 
-        self.__buttonexit = tk.Button(master, text='Salir', width=20, height=2, font='Arial 12 bold', command=self.__actButtonExit)
+        self.__buttonexit = ttk.Button(master, text='Salir', width=20, command=self.__actButtonExit)
         self.__buttonexit.place(x=330, y=470)
+
+        #--------------------------------- Style ---------------------------------------------
+
+        self.__style = ttk.Style(self)
+        self.__style.configure('TButton', font=('Arial',12,'bold'), background='sky blue')
+
 
 
     #----------------------- Actions -----------------------------
@@ -48,7 +55,7 @@ class WindowMain(ttk.Frame):
         WindowFile(tk.Toplevel(),callback=self.__mngfile.setFile)
 
     def __actButtonManage(self):
-        msgbx.showinfo('Action','Has presionado el boton Gestion')
+        WindowManager(tk.Toplevel())
     
     def __actButtonCounting(self):
         msgbx.showinfo('Action','Has presionado el boton Conteo')

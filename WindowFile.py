@@ -7,13 +7,14 @@ class WindowFile(tk.Frame):
         super().__init__(master)
         master.title('Cargar Archivo')
         master.geometry('600x200')
+        master.config(background='sky blue')
         master.resizable(False,False)
 
         self.callback = callback
 
         #-------------------- Labels --------------------
 
-        self.__lblruta = tk.Label(master, text='Ruta: ', font='Arial 12 bold')
+        self.__lblruta = tk.Label(master, text='Ruta: ', font='Arial 12 bold', background='sky blue')
         self.__lblruta.place(x=25, y=40)
 
         #------------------- Entrys -------------------
@@ -28,11 +29,6 @@ class WindowFile(tk.Frame):
 
         self.__btnback = ttk.Button(master, text='Regresar', width=10, command=self.__back)
         self.__btnback.place(x=450, y=120)
-
-        #------------------- Style ---------------------
-
-        self.__style = ttk.Style(self)
-        self.__style.configure('TButton', font=('Arial',12,'bold'))
 
         #---------------- Mostrar ventana --------------
         master.focus()
