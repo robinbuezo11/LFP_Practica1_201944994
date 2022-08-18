@@ -8,7 +8,12 @@ class OpenFile:
         try:
             f = open(ruta,'r', encoding='utf-8')
             if(ruta[len(ruta)-3:len(ruta)]) in ['lfp','LFP','csv','CSV']:
-                file = f.read()
+                file = f.readlines()
+
+                iterador = 0
+                for data in file:
+                    file[iterador] = data.split(',')
+                    iterador += 1
             else:
                 msgbx.showerror('ERROR','Extensión de archivo no válida')
         except:

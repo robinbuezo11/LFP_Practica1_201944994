@@ -2,8 +2,8 @@ import sys
 from tkinter import messagebox as msgbx
 
 class ManagerFile:
-    def __init__(self) -> None:
-        self.__file = None
+    def __init__(self,file=None) -> None:
+        self.__file = file
 
     #----------------------- Functions ----------------------------
 

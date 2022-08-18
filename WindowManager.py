@@ -38,7 +38,7 @@ class WindowManager(tk.Frame):
     #----------------------- Actions -----------------------------
 
     def __actButtonList(self):
-        lstcourses  = WindowList(tk.Toplevel(self),self.__mfile)
+        WindowList(tk.Toplevel(self),self.__mfile)
 
     def __actButtonAdd(self):
         msgbx.showinfo('Action','Has presionado el boton Agregar')
