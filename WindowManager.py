@@ -2,6 +2,7 @@ from ManagerFile import ManagerFile
 import tkinter as tk
 from tkinter import messagebox as msgbx
 from tkinter import ttk
+from WindowList import WindowList
 
 class WindowManager(tk.Frame):
     def __init__(self, master, mfile = ManagerFile()) -> None:
@@ -37,7 +38,7 @@ class WindowManager(tk.Frame):
     #----------------------- Actions -----------------------------
 
     def __actButtonList(self):
-        msgbx.showinfo('Action','Has presionado el boton Listar')
+        lstcourses  = WindowList(tk.Toplevel(self),self.__mfile)
 
     def __actButtonAdd(self):
         msgbx.showinfo('Action','Has presionado el boton Agregar')

@@ -7,7 +7,10 @@ class OpenFile:
         f = None
         try:
             f = open(ruta,'r', encoding='utf-8')
-            file = f.read()
+            if(ruta[len(ruta)-3:len(ruta)]) in ['lfp','LFP','csv','CSV']:
+                file = f.read()
+            else:
+                msgbx.showerror('ERROR','Extensión de archivo no válida')
         except:
             msgbx.showerror("ERROR",sys.exc_info())
         finally:

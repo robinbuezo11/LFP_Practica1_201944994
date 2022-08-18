@@ -55,7 +55,7 @@ class WindowMain(ttk.Frame):
         WindowFile(tk.Toplevel(),callback=self.__mngfile.setFile)
 
     def __actButtonManage(self):
-        WindowManager(tk.Toplevel())
+        WindowManager(tk.Toplevel(),self.__mngfile)
     
     def __actButtonCounting(self):
         msgbx.showinfo('Action','Has presionado el boton Conteo')
