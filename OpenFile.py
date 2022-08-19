@@ -1,3 +1,4 @@
+from audioop import add
 import sys
 from tkinter import messagebox as msgbx
 
@@ -7,13 +8,36 @@ class OpenFile:
         f = None
         try:
             f = open(ruta,'r', encoding='utf-8')
-            if(ruta[len(ruta)-3:len(ruta)]) in ['lfp','LFP','csv','CSV']:
+            if(ruta[len(ruta)-4:len(ruta)]) in ['.lfp','.LFP','.csv','.CSV']:
                 file = f.readlines()
 
                 iterador = 0
-                for data in file:
-                    file[iterador] = data.split(',')
+                for line in file:
+                    file[iterador] = line.split(',')
                     iterador += 1
+
+                data = []
+                
+                for addline in file:
+                    end = False
+                    i=0
+                    while not end:
+                        if len(data) == 0:
+                            data.append(addline)
+                            end = True
+                        else:
+                            while i<len(data) and not end:
+                                if data[i][0] == addline[0]:
+                                    data.pop(i)
+                                    data.append(addline)
+                                    end = True
+                                else:
+                                   i+=1
+                            
+                            if not end:
+                                data.append(addline)
+                                end = True
+
             else:
                 msgbx.showerror('ERROR','Extensión de archivo no válida')
         except:
@@ -21,6 +45,6 @@ class OpenFile:
         finally:
             if f is not None:
                 f.close()
-                return file
+                return data
             else:
                 return None
