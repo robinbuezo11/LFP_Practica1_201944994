@@ -4,11 +4,12 @@ from tkinter import messagebox as msgbx
 from ManagerFile import ManagerFile
 from Course import Course
 
-class WindowAdd(tk.Frame):
-    def __init__(self, master, mngfile = ManagerFile(), callback = None) -> None:
+class WindowUpdate(tk.Frame):
+    def __init__(self, master, mngfile = ManagerFile(), course = Course(), callback = None) -> None:
         self.__mngfile = mngfile
+        self.__course = course
         super().__init__(master)
-        master.title('Agregar Curso')
+        master.title('Actualizar Curso')
         master.geometry('700x580')
         master.config(background='sky blue')
         master.resizable(False,False)
@@ -38,6 +39,7 @@ class WindowAdd(tk.Frame):
         self.__entrystatus = tk.Entry(master)
         self.__entrystatus.place(x=200, y=400, relwidth=0.65, height=25)
 
+        self.__setEntrysValues()
 
         #----------------------------- Labels ----------------------------
 
@@ -64,7 +66,7 @@ class WindowAdd(tk.Frame):
 
         #------------------------------------------- Buttons -----------------------------------------------
         
-        self.__buttonadd = ttk.Button(master, text='Agregar', command=self.__actButtonAdd)
+        self.__buttonadd = ttk.Button(master, text='Actualizar', command=self.__actButtonUpdate)
 
         self.__buttonadd.place(x=350, y=480)
 
@@ -76,16 +78,24 @@ class WindowAdd(tk.Frame):
         master.focus()
         master.grab_set()
 
-    def __actButtonAdd(self):
+    def __actButtonUpdate(self):
         try:
-            course = Course(self.__entrycode.get(), self.__entryname.get(), self.__entryrequisite.get(), int(self.__entryoptional.get()), 
+            newcourse = Course(self.__entrycode.get(), self.__entryname.get(), self.__entryrequisite.get(), int(self.__entryoptional.get()), 
                             int(self.__entrysemester.get()), int(self.__entrycredit.get()), int(self.__entrystatus.get()))
-            self.__mngfile.addCourse(course)
+            self.__mngfile.updateCourse(self.__course.getCode(), newcourse)
             self.callback()
             self.master.destroy()
         except Exception as e:
             msgbx.showerror('Error', e)
 
-
     def __actButtonExit(self):
         self.master.destroy()
+
+    def __setEntrysValues(self):
+        self.__entrycode.insert(0,self.__course.getCode())
+        self.__entryname.insert(0,self.__course.getName())
+        self.__entryrequisite.insert(0,self.__course.getRequisite())
+        self.__entrysemester.insert(0,self.__course.getSemester())
+        self.__entryoptional.insert(0,self.__course.getOptional())
+        self.__entrycredit.insert(0,self.__course.getCredits())
+        self.__entrystatus.insert(0,self.__course.getStatus())

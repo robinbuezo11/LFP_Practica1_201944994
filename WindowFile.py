@@ -1,16 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
-from OpenFile import *
+from ManagerFile import ManagerFile
 
 class WindowFile(tk.Frame):
-    def __init__(self, master, callback=None) -> None:
+    def __init__(self, master, mngfile) -> None:
+        self.__mngfile = mngfile
         super().__init__(master)
         master.title('Cargar Archivo')
         master.geometry('600x200')
         master.config(background='sky blue')
         master.resizable(False,False)
-
-        self.callback = callback
 
         #-------------------- Labels --------------------
 
@@ -38,8 +37,7 @@ class WindowFile(tk.Frame):
     #---------------------- Actions ---------------------------
 
     def __charge(self):
-        if OpenFile.readFile(self.__entryfile.get()) is not None:
-            self.callback(OpenFile.readFile(self.__entryfile.get()))
+        if self.__mngfile.openFile(self.__entryfile.get()) is not None:
             self.master.destroy()
 
 

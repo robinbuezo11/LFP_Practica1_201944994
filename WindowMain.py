@@ -1,10 +1,10 @@
-from doctest import master
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as msgbx
-from ManagerFile import *
-from WindowFile import *
-from WindowManager import *
+from ManagerFile import ManagerFile
+from WindowFile import WindowFile
+from WindowManager import WindowManager
+from WindowCounting import WindowCounting
 
 class WindowMain(ttk.Frame):
     def __init__(self,master) -> None:
@@ -52,13 +52,13 @@ class WindowMain(ttk.Frame):
     #----------------------- Actions -----------------------------
 
     def __actButtonFile(self):
-        WindowFile(tk.Toplevel(),callback=self.__mngfile.setFile)
+        WindowFile(tk.Toplevel(),self.__mngfile)
 
     def __actButtonManage(self):
         WindowManager(tk.Toplevel(),self.__mngfile)
     
     def __actButtonCounting(self):
-        msgbx.showinfo('Action','Has presionado el boton Conteo')
+        WindowCounting(tk.Toplevel(),self.__mngfile)
 
     def __actButtonExit(self):
         self.master.destroy()

@@ -3,10 +3,11 @@ import tkinter as tk
 from tkinter import messagebox as msgbx
 from tkinter import ttk
 from WindowAdd import WindowAdd
+from WindowUpdate import WindowUpdate
 
 class WindowManager(tk.Frame):
     def __init__(self, master, mngfile = ManagerFile()) -> None:
-        self.__mfile = mngfile
+        self.__mngfile = mngfile
         super().__init__(master)
         master.title('Gestionar Cursos')
         master.geometry('1200x700')
@@ -65,24 +66,36 @@ class WindowManager(tk.Frame):
         self.__scroll.pack(side=RIGHT,fill=Y)"""
         
         #---------------- Mostrar ventana ------------------------
-        master.focus()
-        master.grab_set()
 
         self.__setvalues()
 
     #----------------------- Actions -----------------------------
 
     def __actButtonAdd(self):
-        WindowAdd(tk.Toplevel(self))
+        WindowAdd(master=tk.Toplevel(self), mngfile=self.__mngfile, callback=self.__setvalues)
     
     def __actButtonEdit(self):
-        if self.__table.selection_get is not None:
-            WindowAdd(tk.Toplevel(self,code=self.__table.item(self.__table.selection_get())))
+        if self.__table.item(self.__table.focus())['text'] != '':
+            course = self.__mngfile.getCourse(self.__table.item(self.__table.focus())['text'])
+            if course is not None:
+                WindowUpdate(tk.Toplevel(self), self.__mngfile, course, callback=self.__setvalues)
         else:
             msgbx.showwarning('Null', 'Seleccione el elemento a actualizar')
+            self.master.focus()
+            self.master.grab_set()
 
     def __actButtonDelete(self):
-        msgbx.showinfo('Action','Has presionado el boton Eliminar')
+        if self.__table.item(self.__table.focus())['text'] != '':
+            course = self.__mngfile.getCourse(self.__table.item(self.__table.focus())['text'])
+            if course is not None:
+                self.__mngfile.deleteCourse(course.getCode())
+                self.__setvalues()
+            else:
+                msgbx.showwarning('Null','El curso no existe')
+        else:
+            msgbx.showwarning('Null', 'Seleccione el elemento a eliminar')
+            self.master.focus()
+            self.master.grab_set()
 
     def __actButtonExit(self):
         self.master.destroy()
@@ -91,11 +104,17 @@ class WindowManager(tk.Frame):
     #------------------------- Functions -------------------------
 
     def __setvalues(self):
-        if self.__mfile.getFile() is not None:
-            for d in self.__mfile.getFile():
-                self.__table.insert('',tk.END,values=d,text=d[0])
+        self.__table.delete(*self.__table.get_children())
+        if self.__mngfile.getData() is not None:
+            for d in self.__mngfile.getData():
+                self.__table.insert('',tk.END,values=(d.getCode(),d.getName(),d.getRequisite(),d.getOptional(),d.getSemester(),d.getCredits(),
+                                        d.getStatus()), text=d.getCode())
+            self.master.focus()
+            self.master.grab_set()
         else:
             msgbx.showwarning('Vacío','No hay ningún dato')
+            self.master.focus()
+            self.master.grab_set()
 
     def __searchvalue(self):
         for d in self.__table.get_children():
@@ -104,5 +123,5 @@ class WindowManager(tk.Frame):
                 self.__table.selection_set(d)
                 return
         msgbx.showwarning('Null','El curso no existe')
-        self.__table.selection_clear()
-
+        self.__setvalues()
+        
