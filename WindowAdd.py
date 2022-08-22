@@ -80,11 +80,12 @@ class WindowAdd(tk.Frame):
         try:
             course = Course(self.__entrycode.get(), self.__entryname.get(), self.__entryrequisite.get(), int(self.__entryoptional.get()), 
                             int(self.__entrysemester.get()), int(self.__entrycredit.get()), int(self.__entrystatus.get()))
-            self.__mngfile.addCourse(course)
-            self.callback()
-            self.master.destroy()
+            if self.__mngfile.addCourse(course):
+                msgbx.showinfo('Agregado', 'Curso agregado exitosamente')
+                self.callback()
+                self.master.destroy()
         except Exception as e:
-            msgbx.showerror('Error', e)
+            msgbx.showerror('Error', 'Error al intentar agregar el curso, revise sus valores')
 
 
     def __actButtonExit(self):

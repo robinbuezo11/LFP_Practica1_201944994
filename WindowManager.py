@@ -1,3 +1,4 @@
+from turtle import back
 from ManagerFile import ManagerFile
 import tkinter as tk
 from tkinter import messagebox as msgbx
@@ -17,12 +18,18 @@ class WindowManager(tk.Frame):
         #----------------------------- Entry -----------------------------
 
         self.__entrycourse = tk.Entry(master)
-        self.__entrycourse.place(x=350, y=20, relwidth=0.2, height=25)
+        self.__entrycourse.place(x=550, y=20, relwidth=0.2, height=25)
+
+        #----------------------------- Label -----------------------------
+
+        self.__lblinfo = ttk.Label(master, background='sky blue', font='Arial 8 bold', foreground='red3',
+            text='PRERREQUISITOS: \tcodigo1;codigo2\nOBLIGATORIO: \t\t1 -> Si, 0 -> No\nESTADO: \t\t1 -> Cursando, 0 -> Aprobado, -1 -> Pendiente')
+        self.__lblinfo.place(x=10, y=10)
 
         #------------------------------ Buttons --------------------------------
 
         self.__btnsearch = ttk.Button(master, text='Buscar', command=self.__searchvalue)
-        self.__btnsearch.place(x=650, y=20, relwidth=0.1)
+        self.__btnsearch.place(x=850, y=20, relwidth=0.1)
 
         self.__buttonadd = ttk.Button(master, text='Agregar Cursos', command=self.__actButtonAdd)
         self.__buttonadd.place(x=100, y=615)

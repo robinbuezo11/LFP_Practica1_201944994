@@ -38,7 +38,7 @@ class WindowCounting(tk.Frame):
         self.__lblsemester = ttk.Label(master, text='Créditos del Semestre', background='sky blue', font='Arial 14 bold')
         self.__lblsemester.place(x=50, y=371,)
 
-        self.__lblsemapprov = ttk.Label(master, text='Cursos: ', background='sky blue', font='Arial 12 bold')
+        self.__lblsemapprov = ttk.Label(master, text='Créditos: ', background='sky blue', font='Arial 12 bold')
         self.__lblsemapprov.place(x=250, y=281,)
 
         self.__lblsemapprov = ttk.Label(master, text='Aprobados: ', background='sky blue', font='Arial 11 bold')

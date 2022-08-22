@@ -82,17 +82,19 @@ class WindowUpdate(tk.Frame):
         try:
             newcourse = Course(self.__entrycode.get(), self.__entryname.get(), self.__entryrequisite.get(), int(self.__entryoptional.get()), 
                             int(self.__entrysemester.get()), int(self.__entrycredit.get()), int(self.__entrystatus.get()))
-            self.__mngfile.updateCourse(self.__course.getCode(), newcourse)
-            self.callback()
-            self.master.destroy()
+            if self.__mngfile.updateCourse(self.__course.getCode(), newcourse):
+                msgbx.showinfo('Actualizado', 'Curso actualizado exitosamente')
+                self.callback()
+                self.master.destroy()
         except Exception as e:
-            msgbx.showerror('Error', e)
+            msgbx.showerror('Error', 'Error al intentar agregar el curso, revise sus valores')
 
     def __actButtonExit(self):
         self.master.destroy()
 
     def __setEntrysValues(self):
         self.__entrycode.insert(0,self.__course.getCode())
+        self.__entrycode['state']='readonly'
         self.__entryname.insert(0,self.__course.getName())
         self.__entryrequisite.insert(0,self.__course.getRequisite())
         self.__entrysemester.insert(0,self.__course.getSemester())
