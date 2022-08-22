@@ -8,15 +8,16 @@ class ManagerFile:
     #----------------------- Functions ----------------------------
     def openFile(self,ruta):   #Metodo para leer el archivo
         f = None
+        data = None
         try:
             if(ruta[len(ruta)-4:len(ruta)]) in ['.lfp','.LFP','.csv','.CSV']:
                 f = open(ruta,'r', encoding='utf-8')
                 file = f.readlines()
 
                 data = self.__readFile(file)
-                if data is None:
-                    f.close()
-                    return
+                self.__data = data
+                if data is not None:
+                    msgbx.showinfo('Archivo Cargado','El archivo se cargó exitosamente')
             else:
                 msgbx.showerror('ERROR','Extensión de archivo no válida')
                 return
@@ -25,18 +26,14 @@ class ManagerFile:
         finally:
             if f is not None:
                 f.close()
-                self.__data = data
-                msgbx.showinfo('Archivo Cargado','El archivo se cargó exitosamente')
-                return data
-            else:
-                return
+            return data
 
     def __readFile(self, file):
         iterator = 0
         for line in file:
             file[iterator] = line.split(',')
             if len(file[iterator]) != 7:
-                msgbx.showerror('Error','El archivo no contiene la cantidad de datos correcta en la linea: ',line)
+                msgbx.showerror('Error',f'El archivo no contiene la cantidad de datos correcta en la linea: {line}')
                 return
             
             if file[iterator][6][len(file[iterator][6])-1:len(file[iterator][6])] == '\n':
